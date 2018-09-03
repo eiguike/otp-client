@@ -7,7 +7,6 @@
 
 static OTPData* tdata = NULL;
 
-
 // byte_secret is unbase32 key
 // byte_string is data to be HMAC'd
 int hmac_algo_sha1(const char byte_secret[], const char byte_string[], char out[]) {
@@ -44,35 +43,27 @@ int Otp_New() {
   return 0;
 }
 
-int Otp_Check(char* Secret) {
-  char* tcode = NULL;
-  int Response = FALSE;
+void Otp_Print() {
+  char tcode[100] = { 0 };
+  char aux[100] = { 0 };
 
-  if (Secret == NULL || tdata == NULL) {
-    printf("ERROR: Invalid parameters Secret %x tdata %x\n", Secret, tdata);
-    return Response;
-  }
-
-	tcode = calloc(DIGITS+1, sizeof(char));
-  if (tcode == NULL) {
-    printf("ERROR: Could not allocate memory for tcode!\n");
-    return Response;
+  if (tdata == NULL) {
+    printf("ERROR: Invalid parameters tdata %x\n", tdata);
+    goto FINISH;
   }
 
 	int totp_err_1 = totp_now(tdata, tcode);
 	if(totp_err_1 == 0) {
-		puts("TOTP Error 1");
-		return Response;
+		printf("TOTP Error 1");
+    goto FINISH;
 	}
 
-  if (strcmp(Secret, tcode) == 0) {
-    Response = TRUE;
-  }
+  sprintf(aux, "echo \"%s\" | tr -d \'\n\' | pbcopy", tcode); 
+  system(aux);
+  printf("%s\n", tcode);
 
-  if (tcode != NULL) {
-    free(tcode);
-  }
-  return Response;
+FINISH:
+  return;
 }
 
 void Otp_Dispose() {
