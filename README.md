@@ -1,6 +1,8 @@
 # otp-client
 ---
+
 the purpose of this application is just to retrieve a time-based one-time password (TOTP) through a command line and save it to clipboard's buffer.
+
 ---
 ### Requirements:
 - cmake;
