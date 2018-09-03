@@ -1,5 +1,6 @@
 #include "cotp.h"
 #include "otp.h"
+#include "clipboard.h"
 
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
@@ -54,12 +55,11 @@ void Otp_Print() {
 
 	int totp_err_1 = totp_now(tdata, tcode);
 	if(totp_err_1 == 0) {
-		printf("TOTP Error 1");
+		printf("TOTP Error 1\n");
     goto FINISH;
 	}
 
-  sprintf(aux, "echo \"%s\" | tr -d \'\n\' | pbcopy", tcode); 
-  system(aux);
+  Clipboard_CopyToBuffer(tcode);
   printf("%s\n", tcode);
 
 FINISH:
