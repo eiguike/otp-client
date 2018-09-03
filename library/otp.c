@@ -12,15 +12,15 @@ static OTPData* tdata = NULL;
 // byte_string is data to be HMAC'd
 int hmac_algo_sha1(const char byte_secret[], const char byte_string[], char out[]) {
 
-	// Output len
-	unsigned int len = SHA1_BYTES;
+  // Output len
+  unsigned int len = SHA1_BYTES;
 
-	// Return the HMAC success
-	return HMAC(
-			EVP_sha1(),									// algorithm
-			(unsigned char*)byte_secret, 10,			// key
-			(unsigned char*)byte_string, 8,				// data
-			(unsigned char*)out, &len) == 0 ? 0 : 1;	// output
+  // Return the HMAC success
+  return HMAC(
+      EVP_sha1(),									// algorithm
+      (unsigned char*)byte_secret, 10,			// key
+      (unsigned char*)byte_string, 8,				// data
+      (unsigned char*)out, &len) == 0 ? 0 : 1;	// output
 }
 
 int Otp_New() {
@@ -53,11 +53,11 @@ void Otp_Print() {
     goto FINISH;
   }
 
-	int totp_err_1 = totp_now(tdata, tcode);
-	if(totp_err_1 == 0) {
-		printf("TOTP Error 1\n");
+  int totp_err_1 = totp_now(tdata, tcode);
+  if(totp_err_1 == 0) {
+    printf("TOTP Error 1\n");
     goto FINISH;
-	}
+  }
 
   Clipboard_CopyToBuffer(tcode);
   printf("%s\n", tcode);
