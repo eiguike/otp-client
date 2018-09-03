@@ -7,6 +7,7 @@ the purpose of this application is just to retrieve a time-based one-time passwo
 ### Requirements:
 - cmake;
 - OpenSSL;
+- Mac OSX;
 ---
 ### Building:
 1. Build with cmake passing your secret key
